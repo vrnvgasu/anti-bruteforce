@@ -1,0 +1,6 @@
+logger:
+  level: DEBUG
+
+grpsServer:
+  port: 50051
+  host: antibruteforce
