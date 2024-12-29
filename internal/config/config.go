@@ -13,8 +13,10 @@ var Cfg *Config
 type LogLevel string
 
 type Config struct {
-	Logger     LoggerConf     `yaml:"logger"`
-	GRPSServer GRPSServerConf `yaml:"grpsServer"`
+	Logger     `yaml:"logger"`
+	GRPSServer `yaml:"grpsServer"`
+	Redis      `yaml:"redis"`
+	PSQL       `json:"psql"`
 }
 
 func NewConfig(configFile string) *Config {
@@ -33,11 +35,25 @@ func NewConfig(configFile string) *Config {
 	return &c
 }
 
-type LoggerConf struct {
+type PSQL struct {
+	DSN       string `yaml:"dsn"`
+	Migration string `json:"migration"`
+}
+
+type Logger struct {
 	Level logger.LogLevel `yaml:"level"`
 }
 
-type GRPSServerConf struct {
+type GRPSServer struct {
 	Port int    `yaml:"port"`
 	Host string `yaml:"host"`
+}
+
+type Redis struct {
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	Password string `yaml:"password"`
+	Username string `yaml:"username"`
+	DB       int    `yaml:"db"`
+	TokensDB int    `yaml:"tokenDb"`
 }
