@@ -17,6 +17,7 @@ type Config struct {
 	GRPSServer `yaml:"grpsServer"`
 	Redis      `yaml:"redis"`
 	PSQL       `json:"psql"`
+	Rate       `json:"rate"`
 }
 
 func NewConfig(configFile string) *Config {
@@ -35,6 +36,12 @@ func NewConfig(configFile string) *Config {
 	return &c
 }
 
+type Rate struct {
+	Login     int64 `yaml:"login"`
+	Password  int64 `yaml:"password"`
+	IP        int64 `yaml:"ip"`
+	TimeLimit int64 `yaml:"timeLimit"`
+}
 type PSQL struct {
 	DSN       string `yaml:"dsn"`
 	Migration string `json:"migration"`

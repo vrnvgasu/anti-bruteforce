@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 	"vrnvgasu/anti-bruteforce/internal/config"
+	"vrnvgasu/anti-bruteforce/internal/core/bucket"
 	"vrnvgasu/anti-bruteforce/internal/logger"
 	"vrnvgasu/anti-bruteforce/internal/storage"
 	"vrnvgasu/anti-bruteforce/internal/storage/postgres"
@@ -23,7 +24,9 @@ func main() {
 	lg := logger.New(config.Cfg.Logger.Level)
 
 	st := mustStartStorage(ctx, lg)
-	_ = st
+
+	bt := bucket.NewBucket(st)
+	_ = bt
 
 	ctx, cancel := signal.NotifyContext(ctx, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
 	defer cancel()

@@ -30,3 +30,7 @@ Thumbs.db
 main.log
 bin
 xxx
+data
+
+# Generated
+**/mocks/

@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+	"time"
 )
 
 type DBStorage interface {
@@ -12,24 +13,26 @@ type DBStorage interface {
 }
 
 type KeyValueStorage interface {
+	IncrCounterByKey(ctx context.Context, key string) (int64, error)
+	ExpireKey(ctx context.Context, key string, duration time.Duration) error
 	Connect(_ context.Context) error
 	Close(_ context.Context) error
 }
 
 type Storage struct {
-	db DBStorage
-	kv KeyValueStorage
+	DBStorage
+	KeyValueStorage
 }
 
 func NewStorage(db DBStorage, kv KeyValueStorage) *Storage {
-	return &Storage{db: db, kv: kv}
+	return &Storage{DBStorage: db, KeyValueStorage: kv}
 }
 
 func (s *Storage) Start(ctx context.Context) error {
-	if err := s.db.Connect(ctx); err != nil {
+	if err := s.DBStorage.Connect(ctx); err != nil {
 		return fmt.Errorf("storage: failed to connect to db storage: %w", err)
 	}
-	if err := s.kv.Connect(ctx); err != nil {
+	if err := s.KeyValueStorage.Connect(ctx); err != nil {
 		return fmt.Errorf("storage: failed to connect to key value storage: %w", err)
 	}
 
@@ -37,13 +40,13 @@ func (s *Storage) Start(ctx context.Context) error {
 }
 
 func (s *Storage) ShutDown() error {
-	if s.db != nil {
-		if err := s.db.Close(context.Background()); err != nil {
+	if s.DBStorage != nil {
+		if err := s.DBStorage.Close(context.Background()); err != nil {
 			return fmt.Errorf("storage: failed to close db storage: %w", err)
 		}
 	}
-	if s.kv != nil {
-		if err := s.kv.Close(context.Background()); err != nil {
+	if s.KeyValueStorage != nil {
+		if err := s.KeyValueStorage.Close(context.Background()); err != nil {
 			return fmt.Errorf("storage: failed to close key value storage: %w", err)
 		}
 	}

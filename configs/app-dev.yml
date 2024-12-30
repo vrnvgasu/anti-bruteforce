@@ -14,3 +14,9 @@ redis:
   host: 127.0.0.1
   db: 0
   tokenDb: 1
+
+rate:
+  login: 10
+  password: 100
+  ip: 1000
+  timeLimit: 60
