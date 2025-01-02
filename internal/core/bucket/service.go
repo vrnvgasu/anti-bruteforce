@@ -7,7 +7,7 @@ import (
 	"vrnvgasu/anti-bruteforce/internal/config"
 )
 
-//go:generate go run github.com/vektra/mockery/v2@v2.50.1 --name=Storage
+//go:generate go run github.com/vektra/mockery/v2@v2.50.1 --name=Storage --with-expecter
 type Storage interface {
 	IncrCounterByKey(ctx context.Context, key string) (int64, error)
 	ExpireKey(ctx context.Context, key string, duration time.Duration) error
