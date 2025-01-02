@@ -43,3 +43,4 @@ lint: generate install-lint-deps
 generate: generate
 	@echo "Run go:generate"
 	@go generate ./...
+	protoc api/*.proto --go_out=./internal/server/grpc/pb --go-grpc_out=./internal/server/grpc/pb

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package event;
+option go_package = "./;pb";
+
+service AntiBruteforce {
+  rpc Check (CheckRequest) returns (CheckResponse) {}
+  rpc Clear (ClearRequest) returns (OK) {}
+  rpc AddToList (ListRequest) returns (OK) {}
+  rpc RemoveFromList (IP) returns (OK) {}
+}
+
+message CheckRequest {
+  string login = 1;
+  string password = 2;
+  string ip = 3;
+}
+
+message CheckResponse {
+  bool result = 1;
+}
+
+message ClearRequest {
+  string login = 1;
+  string ip = 2;
+}
+
+message ListRequest {
+  IP ip = 1;
+  ListType type = 2;
+}
+
+message IP {
+  string ip = 1;
+  string mask = 2;
+}
+
+message OK {}
+
+enum ListType {
+  BLACK = 0;
+  WHITE = 1;
+}
