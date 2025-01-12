@@ -3,7 +3,7 @@ logger:
 
 grpsServer:
   port: 50051
-  host: antibruteforce
+  host: 127.0.0.1
 
 psql:
   dsn: "host=localhost port=5430 user=user password=qwerty dbname=antibruteforce sslmode=disable"

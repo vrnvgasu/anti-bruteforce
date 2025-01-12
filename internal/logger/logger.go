@@ -63,7 +63,6 @@ func (l Logger) File(msg string) {
 
 func defaultLogger(level slog.Level) *slog.Logger {
 	logConfig := &slog.HandlerOptions{
-		AddSource:   true,
 		Level:       level,
 		ReplaceAttr: nil,
 	}
@@ -81,7 +80,6 @@ func fileLogger(level slog.Level) *slog.Logger {
 	writer := io.MultiWriter(file, os.Stderr)
 
 	logConfig := &slog.HandlerOptions{
-		AddSource:   false,
 		Level:       level,
 		ReplaceAttr: nil,
 	}
