@@ -7,7 +7,7 @@ service AntiBruteforce {
   rpc Check (CheckRequest) returns (CheckResponse) {}
   rpc Clear (ClearRequest) returns (OK) {}
   rpc AddToList (ListRequest) returns (OK) {}
-  rpc RemoveFromList (IP) returns (OK) {}
+  rpc RemoveFromList (ListRequest) returns (OK) {}
 }
 
 message CheckRequest {
@@ -26,11 +26,11 @@ message ClearRequest {
 }
 
 message ListRequest {
-  IP ip = 1;
+  Subnet subnet = 1;
   ListType type = 2;
 }
 
-message IP {
+message Subnet {
   string ip = 1;
   string mask = 2;
 }

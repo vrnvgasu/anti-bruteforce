@@ -18,7 +18,12 @@ type Logger interface {
 	File(msg string)
 }
 
-type Storage interface{}
+type Storage interface {
+	GetSet(ctx context.Context, set string) ([]string, error)
+	AddToSet(ctx context.Context, set string, values ...string) error
+	RemoveFromSet(ctx context.Context, set string, values ...string) error
+	DeleteByKey(ctx context.Context, key string) error
+}
 
 type Bucket interface {
 	Check(ctx context.Context, item string, entity bucket.EntityRate) (bool, error)

@@ -15,6 +15,13 @@ type DBStorage interface {
 type KeyValueStorage interface {
 	IncrCounterByKey(ctx context.Context, key string) (int64, error)
 	ExpireKey(ctx context.Context, key string, duration time.Duration) error
+
+	DeleteByKey(ctx context.Context, key string) error
+
+	GetSet(ctx context.Context, set string) ([]string, error)
+	AddToSet(ctx context.Context, set string, values ...string) error
+	RemoveFromSet(ctx context.Context, set string, values ...string) error
+
 	Connect(_ context.Context) error
 	Close(_ context.Context) error
 }

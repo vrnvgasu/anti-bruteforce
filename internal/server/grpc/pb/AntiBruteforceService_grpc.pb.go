@@ -32,7 +32,7 @@ type AntiBruteforceClient interface {
 	Check(ctx context.Context, in *CheckRequest, opts ...grpc.CallOption) (*CheckResponse, error)
 	Clear(ctx context.Context, in *ClearRequest, opts ...grpc.CallOption) (*OK, error)
 	AddToList(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*OK, error)
-	RemoveFromList(ctx context.Context, in *IP, opts ...grpc.CallOption) (*OK, error)
+	RemoveFromList(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*OK, error)
 }
 
 type antiBruteforceClient struct {
@@ -73,7 +73,7 @@ func (c *antiBruteforceClient) AddToList(ctx context.Context, in *ListRequest, o
 	return out, nil
 }
 
-func (c *antiBruteforceClient) RemoveFromList(ctx context.Context, in *IP, opts ...grpc.CallOption) (*OK, error) {
+func (c *antiBruteforceClient) RemoveFromList(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*OK, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(OK)
 	err := c.cc.Invoke(ctx, AntiBruteforce_RemoveFromList_FullMethodName, in, out, cOpts...)
@@ -90,7 +90,7 @@ type AntiBruteforceServer interface {
 	Check(context.Context, *CheckRequest) (*CheckResponse, error)
 	Clear(context.Context, *ClearRequest) (*OK, error)
 	AddToList(context.Context, *ListRequest) (*OK, error)
-	RemoveFromList(context.Context, *IP) (*OK, error)
+	RemoveFromList(context.Context, *ListRequest) (*OK, error)
 	mustEmbedUnimplementedAntiBruteforceServer()
 }
 
@@ -110,7 +110,7 @@ func (UnimplementedAntiBruteforceServer) Clear(context.Context, *ClearRequest) (
 func (UnimplementedAntiBruteforceServer) AddToList(context.Context, *ListRequest) (*OK, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddToList not implemented")
 }
-func (UnimplementedAntiBruteforceServer) RemoveFromList(context.Context, *IP) (*OK, error) {
+func (UnimplementedAntiBruteforceServer) RemoveFromList(context.Context, *ListRequest) (*OK, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveFromList not implemented")
 }
 func (UnimplementedAntiBruteforceServer) mustEmbedUnimplementedAntiBruteforceServer() {}
@@ -189,7 +189,7 @@ func _AntiBruteforce_AddToList_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _AntiBruteforce_RemoveFromList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IP)
+	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -201,7 +201,7 @@ func _AntiBruteforce_RemoveFromList_Handler(srv interface{}, ctx context.Context
 		FullMethod: AntiBruteforce_RemoveFromList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AntiBruteforceServer).RemoveFromList(ctx, req.(*IP))
+		return srv.(AntiBruteforceServer).RemoveFromList(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
