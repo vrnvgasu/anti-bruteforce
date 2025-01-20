@@ -13,7 +13,6 @@ import (
 	"vrnvgasu/anti-bruteforce/internal/logger"
 	internalgrpc "vrnvgasu/anti-bruteforce/internal/server/grpc"
 	"vrnvgasu/anti-bruteforce/internal/storage"
-	"vrnvgasu/anti-bruteforce/internal/storage/postgres"
 	"vrnvgasu/anti-bruteforce/internal/storage/redis"
 )
 
@@ -64,7 +63,7 @@ func stopStorage(st *storage.Storage, lg *logger.Logger) {
 }
 
 func mustStartStorage(ctx context.Context, lg *logger.Logger) *storage.Storage {
-	st := storage.NewStorage(postgres.NewPostgresService(), redis.NewRedisService())
+	st := storage.NewStorage(redis.NewRedisService())
 	if err := st.Start(ctx); err != nil {
 		msg := "failed to start storage" + err.Error()
 		lg.Error(msg)

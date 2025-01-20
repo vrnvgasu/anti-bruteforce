@@ -12,7 +12,7 @@ redis:
   tokenDb: 1
 
 rate:
-  login: 10
-  password: 100
-  ip: 1000
-  timeLimit: 60
+  login: 5
+  password: 10
+  ip: 15
+  timeLimit: 5

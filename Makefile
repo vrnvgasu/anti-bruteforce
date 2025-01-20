@@ -47,3 +47,4 @@ generate: generate
 .PHONY: generate-grpc
 generate-grpc:
 	protoc api/*.proto --go_out=./internal/server/grpc/pb --go-grpc_out=./internal/server/grpc/pb
+	protoc api/*.proto --go_out=./tests/grpc/pb --go-grpc_out=./tests/grpc/pb
