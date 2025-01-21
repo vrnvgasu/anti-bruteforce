@@ -15,4 +15,4 @@ rate:
   login: 5
   password: 10
   ip: 15
-  timeLimit: 5
+  timeLimit: 1

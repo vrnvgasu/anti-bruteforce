@@ -11,7 +11,6 @@ import (
 	"vrnvgasu/anti-bruteforce/tests/grpc/pb"
 
 	"github.com/go-redis/redis/v8"
-	_ "github.com/jackc/pgx/stdlib" // postgresql provider
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"google.golang.org/grpc"
