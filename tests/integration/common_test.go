@@ -19,9 +19,13 @@ const (
 	rateIPDefault        = "15"
 	rateTimeLimitDefault = "1"
 
-	loginDefault    = "login"
-	passwordDefault = "pass"
-	ipDefault       = "192.168.5.1"
+	loginDefault      = "login"
+	passwordDefault   = "pass"
+	ipDefault         = "192.168.5.1"
+	subnetIPDefault   = "192.168.5.0"
+	subnetMaskDefault = "24"
+	blackList         = 0
+	whiteList         = 1
 )
 
 func (s *SuiteIntegrationTest) redisIsEmpty() {
