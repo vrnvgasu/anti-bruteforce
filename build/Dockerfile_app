@@ -1,4 +1,4 @@
-# Собираем в гошке
+
 FROM golang:1.22 as build
 
 ENV BIN_FILE /opt/antibruteforce/antibruteforce-app
@@ -23,11 +23,13 @@ RUN CGO_ENABLED=0 go build \
 # На выходе тонкий образ
 FROM alpine:3.9
 
+LABEL SERVICE="antibruteforce"
+
 ENV BIN_FILE "/opt/antibruteforce/antibruteforce-app"
 COPY --from=build ${BIN_FILE} ${BIN_FILE}
 
+ARG SOURCE_CONFIG_FILE
 ENV CONFIG_FILE /etc/antibruteforce/config.yml
-COPY ./configs/app-dev.yml ${CONFIG_FILE}
-#COPY ./migrations ./migrations
 
+COPY ${SOURCE_CONFIG_FILE} ${CONFIG_FILE}
 CMD ${BIN_FILE} -config ${CONFIG_FILE}

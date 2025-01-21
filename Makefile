@@ -6,7 +6,9 @@ LDFLAGS := -X main.release="develop" -X main.buildDate=$(shell date -u +%Y-%m-%d
 
 .PHONY: integration-tests
 integration-tests:
-	echo "integration-tests"
+	SOURCE_CONFIG_FILE="./configs/app-test.yml" docker compose --project-directory ./deployments up -d
+	go test -tags=integration ./tests/integration -v
+	docker compose --project-directory ./deployments down
 
 .PHONY: build
 build:
@@ -22,6 +24,14 @@ build-img:
 .PHONY: build-img
 run-img: build-img
 	docker run $(DOCKER_IMG_APP)
+
+.PHONY: run
+run:
+	SOURCE_CONFIG_FILE="./configs/app-dev.yml" docker compose --project-directory ./deployments up -d
+
+.PHONY: stop
+stop:
+	docker compose --project-directory ./deployments down
 
 .PHONY:
 version: build

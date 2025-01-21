@@ -2,35 +2,17 @@ version: '3.8'
 name: 'anti-bruteforce'
 
 services:
-  app:
+  antibruteforce:
     build:
       dockerfile: ./build/Dockerfile_app
       context: ../
+      args:
+        SOURCE_CONFIG_FILE: ${SOURCE_CONFIG_FILE:-./configs/app-dev.yml}
+    ports:
+      - "50051:50051"
     depends_on:
-      - postgres
       - redis
     restart: on-failure
-    networks:
-      - anti-bruteforce-network
-  postgres:
-    container_name: db_antibruteforce
-    image: postgres:15
-    build:
-      context: ../
-    environment:
-      POSTGRES_DB: "antibruteforce"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "qwerty"
-    ports:
-      - "5430:5432"
-    restart: unless-stopped
-    volumes:
-      - ./../data/postgres:/var/lib/postgresql/data
-    healthcheck:
-      test: [ 'CMD-SHELL', 'pg_isready' ]
-      interval: 30s
-      timeout: 10s
-      retries: 10
     networks:
       - anti-bruteforce-network
   redis:

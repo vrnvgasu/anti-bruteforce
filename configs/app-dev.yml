@@ -3,11 +3,11 @@ logger:
 
 grpsServer:
   port: 50051
-  host: 127.0.0.1
+  host: antibruteforce
 
 redis:
-  port: 6380
-  host: 127.0.0.1
+  port: 6379
+  host: redis
   db: 0
   tokenDb: 1
 
