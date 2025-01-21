@@ -3,6 +3,7 @@ DOCKER_IMG_APP="antibruteforce:develop"
 
 GIT_HASH := $(shell git log --format="%h" -n 1)
 LDFLAGS := -X main.release="develop" -X main.buildDate=$(shell date -u +%Y-%m-%dT%H:%M:%S) -X main.gitHash=$(GIT_HASH)
+SOURCE_CONFIG_FILE := ./configs/app-dev.yml
 
 .PHONY: integration-tests
 integration-tests:
@@ -18,16 +19,13 @@ build:
 build-img:
 	docker build \
 		--build-arg=LDFLAGS="$(LDFLAGS)" \
+		--build-arg=SOURCE_CONFIG_FILE="$(SOURCE_CONFIG_FILE)" \
 		-t $(DOCKER_IMG_APP) \
 		-f build/Dockerfile_app .
 
-.PHONY: build-img
-run-img: build-img
-	docker run $(DOCKER_IMG_APP)
-
 .PHONY: run
 run:
-	SOURCE_CONFIG_FILE="./configs/app-dev.yml" docker compose --project-directory ./deployments up -d
+	SOURCE_CONFIG_FILE="$(SOURCE_CONFIG_FILE)" docker compose --project-directory ./deployments up -d
 
 .PHONY: stop
 stop:
