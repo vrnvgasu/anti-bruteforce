@@ -5,9 +5,10 @@ import (
 	"testing"
 	"time"
 
+	storageMock "vrnvgasu/anti-bruteforce/internal/core/bucket/mocks"
+
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	storageMock "vrnvgasu/anti-bruteforce/internal/core/bucket/mocks"
 )
 
 func TestCheckByStorage(t *testing.T) {
