@@ -1,4 +1,5 @@
 BIN_APP := "./bin/antibruteforce"
+BIN_CLI := "./bin/cli_antibruteforce"
 DOCKER_IMG_APP="antibruteforce:develop"
 
 GIT_HASH := $(shell git log --format="%h" -n 1)
@@ -14,6 +15,7 @@ integration-tests:
 .PHONY: build
 build:
 	go build -v -o $(BIN_APP) -ldflags "$(LDFLAGS)" ./cmd/app
+	go build -v -o $(BIN_CLI) -ldflags "$(LDFLAGS)" ./cmd/cli
 
 .PHONY: build-img
 build-img:
